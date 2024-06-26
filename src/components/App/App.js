@@ -1,5 +1,8 @@
 import React from "react";
 import styles from "./App.module.css";
+import Playlist from "../Playlist/Playlist";
+import SearchBar from "../SearchBar/SearchBar";
+import SearchResults from "../SearchResults/SearchResults";
 
 function App() {
   return (
@@ -8,10 +11,10 @@ function App() {
         Ja<span className={styles.highlight}>mmm</span>ing
       </h1>
       <div className={styles.App}>
-        {/* SearchBar component  */}
+        <SearchBar />
         <div className={styles.appPlaylist}>
-          {/* SearchResults component */}
-          {/* Playlist component */}
+          <SearchResults />
+          <Playlist />
         </div>
       </div>
     </div>
