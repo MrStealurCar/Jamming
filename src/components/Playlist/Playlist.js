@@ -4,10 +4,11 @@ import Tracklist from "../Tracklist/Tracklist";
 function Playlist({
   playlistTitle,
   playlistDesc,
-  privatePlaylist,
+  isPrivate,
   playlistTracks,
   setPlaylistTitle,
   setPlaylistTracks,
+  setIsPrivate,
   onRemove,
   onSave,
 
@@ -21,24 +22,36 @@ function Playlist({
     setPlaylistDesc(e.target.value);
   };
 
+  const handlePrivateToggleChange = (e) => {
+    setIsPrivate(e.target.checked);
+  };
+
   return (
     <div>
       <div className={styles.Playlist}>
+        <label></label>
         <input
           id="playlistTitle"
           value={playlistTitle}
           onChange={handlePlaylistNameChange}
           type="text"
+          placeholder="New Playlist"
         />
 
         <input
           id="playlistDescription"
           onChange={handleDescriptionChange}
           value={playlistDesc}
+          placeholder="Add an Optional Description"
+          type="text"
         />
-
-        {/* <label for="privatePlaylist"></label>
-          <input value={privatePlaylist} id="privatePlaylist" type="checkbox" /> */}
+        <label for="privatePlaylist">Private Playlist</label>
+        <input
+          checked={isPrivate}
+          id="privatePlaylist"
+          type="checkbox"
+          onChange={handlePrivateToggleChange}
+        />
 
         <Tracklist
           tracks={playlistTracks}
