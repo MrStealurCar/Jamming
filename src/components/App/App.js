@@ -19,10 +19,10 @@ function App() {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  const [playlistTitle, setPlaylistTitle] = useState("New Playlist");
+  const [playlistTitle, setPlaylistTitle] = useState("");
   const [playlistTracks, setPlaylistTracks] = useState([]);
-  const [playlistDesc, setPlaylistDesc] = useState("Enter a Description");
-  const [privatePlaylist, setPrivatePlaylist] = useState(false);
+  const [playlistDesc, setPlaylistDesc] = useState("");
+  const [isPrivate, setIsPrivate] = useState(false);
 
   useEffect(() => {
     // Get the hash from the URL
@@ -143,6 +143,7 @@ function App() {
           body: JSON.stringify({
             name: playlistTitle,
             description: playlistDesc,
+            public: !isPrivate,
           }),
         }
       );
@@ -173,10 +174,11 @@ function App() {
         throw new Error("Failed to add track");
       }
 
-      //Clears playlist and reverts back to default title and description
-      setPlaylistTitle("New Playlist");
-      setPlaylistDesc("Enter a Description");
+      //Clears playlist, makes playlist public again (if user checked box), and reverts back to placeholder title and description
+      setPlaylistTitle("");
+      setPlaylistDesc("");
       setPlaylistTracks([]);
+      setIsPrivate(false);
     } catch (error) {
       console.log("Error adding tracks:", error);
     }
@@ -194,18 +196,21 @@ function App() {
             value={query}
             onChange={handleSearchChange}
             getSearchResults={getSearchResults}
+            setSearchResults={setSearchResults}
           />
         </div>
+
         <div className={styles.appPlaylist}>
           <SearchResults searchResults={searchResults} onAdd={addTrack} />
           <Playlist
             playlistTitle={playlistTitle}
             playlistDesc={playlistDesc}
-            privatePlaylist={privatePlaylist}
+            isPrivate={isPrivate}
             playlistTracks={playlistTracks}
             setPlaylistTitle={setPlaylistTitle}
             setPlaylistTracks={setPlaylistTracks}
             setPlaylistDesc={setPlaylistDesc}
+            setIsPrivate={setIsPrivate}
             onRemove={removeTrack}
             onSave={savePlaylist}
           />
