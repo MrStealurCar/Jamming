@@ -12,7 +12,7 @@ const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
 const RESPONSE_TYPE = "token";
 const loginUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
   REDIRECT_URI
-)}&response_type=${RESPONSE_TYPE}&scope=user-read-private user-read-email`;
+)}&response_type=${RESPONSE_TYPE}&scope=playlist-modify-public playlist-modify-private user-read-private user-read-email`;
 
 function App() {
   const [token, setToken] = useState(null);
@@ -21,6 +21,8 @@ function App() {
 
   const [playlistTitle, setPlaylistTitle] = useState("New Playlist");
   const [playlistTracks, setPlaylistTracks] = useState([]);
+  const [playlistDesc, setPlaylistDesc] = useState("Enter a Description");
+  const [privatePlaylist, setPrivatePlaylist] = useState(false);
 
   useEffect(() => {
     // Get the hash from the URL
@@ -70,7 +72,6 @@ function App() {
       return null;
     }
   };
-
   const getSearchResults = async () => {
     const token = getToken();
     if (!token) return;
@@ -108,8 +109,12 @@ function App() {
   const handleSearchChange = (e) => {
     setQuery(e.target.value);
   };
-  console.log("Playlist title:", playlistTitle);
-  const savePlaylist = async (playlistTitle) => {
+
+  const savePlaylist = async () => {
+    console.log("savePlaylist function called");
+    console.log("Token:", token);
+    console.log("Playlist Title:", playlistTitle);
+    console.log("Playlist Tracks:", playlistTracks);
     try {
       // Makes request to get users profile
       const response = await fetch(`https://api.spotify.com/v1/me`, {
@@ -137,6 +142,7 @@ function App() {
           },
           body: JSON.stringify({
             name: playlistTitle,
+            description: playlistDesc,
           }),
         }
       );
@@ -166,11 +172,13 @@ function App() {
       if (!addTrackResponse.ok) {
         throw new Error("Failed to add track");
       }
+
+      //Clears playlist and reverts back to default title and description
+      setPlaylistTitle("New Playlist");
+      setPlaylistDesc("Enter a Description");
+      setPlaylistTracks([]);
     } catch (error) {
-      console.log(
-        "Error fetching userID, creating playlist, or adding tracks:",
-        error
-      );
+      console.log("Error adding tracks:", error);
     }
   };
 
@@ -192,9 +200,12 @@ function App() {
           <SearchResults searchResults={searchResults} onAdd={addTrack} />
           <Playlist
             playlistTitle={playlistTitle}
+            playlistDesc={playlistDesc}
+            privatePlaylist={privatePlaylist}
             playlistTracks={playlistTracks}
             setPlaylistTitle={setPlaylistTitle}
             setPlaylistTracks={setPlaylistTracks}
+            setPlaylistDesc={setPlaylistDesc}
             onRemove={removeTrack}
             onSave={savePlaylist}
           />
