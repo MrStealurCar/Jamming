@@ -6,9 +6,10 @@ import SearchResults from "../SearchResults/SearchResults";
 // import queryString from "query-string";
 // import TrackList from "../Tracklist/Tracklist";
 
-const CLIENT_ID = "99cba05dd73c4108ad55b782e8072e25";
-const REDIRECT_URI = "http://localhost:3000";
-const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
+const CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+const REDIRECT_URI = process.env.REACT_APP_SPOTIFY_REDIRECT_URI;
+const AUTH_ENDPOINT = process.env.REACT_APP_SPOTIFY_AUTH_URL;
+
 const RESPONSE_TYPE = "token";
 const loginUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
   REDIRECT_URI
