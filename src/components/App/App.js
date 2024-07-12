@@ -106,15 +106,9 @@ function App() {
     );
   };
 
-  const handleSearchChange = (e) => {
-    setQuery(e.target.value);
-  };
+  const handleSearchChange = (e) => setQuery(e.target.value);
 
   const savePlaylist = async () => {
-    console.log("savePlaylist function called");
-    console.log("Token:", token);
-    console.log("Playlist Title:", playlistTitle);
-    console.log("Playlist Tracks:", playlistTracks);
     try {
       // Makes request to get users profile
       const response = await fetch(`https://api.spotify.com/v1/me`, {
@@ -129,7 +123,6 @@ function App() {
 
       const profile = await response.json();
       const user_id = profile.id; //Gets user ID
-      console.log("User ID:", user_id);
 
       //Create new playlist
       const createPlaylistResponse = await fetch(
@@ -154,7 +147,7 @@ function App() {
 
       const playlist = await createPlaylistResponse.json();
       const playlist_id = playlist.id;
-      console.log("Playlist ID:", playlist_id);
+
       const trackUris = playlistTracks.map((track) => track.uri);
 
       //Add tracks to playlist
@@ -180,7 +173,7 @@ function App() {
       setPlaylistTracks([]);
       setIsPrivate(false);
     } catch (error) {
-      console.log("Error adding tracks:", error);
+      console.error("Error adding tracks:", error);
     }
   };
 
@@ -208,7 +201,6 @@ function App() {
             isPrivate={isPrivate}
             playlistTracks={playlistTracks}
             setPlaylistTitle={setPlaylistTitle}
-            setPlaylistTracks={setPlaylistTracks}
             setPlaylistDesc={setPlaylistDesc}
             setIsPrivate={setIsPrivate}
             onRemove={removeTrack}

@@ -1,0 +1,13 @@
+Fix Authentication ✅
+
+have search input set a state variable for query string ✅
+
+create a function to fetch search results from spotify api using query string
+put fetched results into searchResults state ✅ 
+
+update track component to display correct spotify data model 
+
+create function to save the playlist (Take playlist name state and send that to request to save playlist)
+-make request to get user profile ✅
+-using id from user profile and name of the playlist, make a request to create the playlist
+-using id from playlist and the playlist tracks (the uris of playlist tracks), make a request to add items to the playlist

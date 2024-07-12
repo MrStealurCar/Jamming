@@ -7,29 +7,20 @@ function Playlist({
   isPrivate,
   playlistTracks,
   setPlaylistTitle,
-  setPlaylistTracks,
   setIsPrivate,
   onRemove,
   onSave,
 
   setPlaylistDesc,
 }) {
-  const handlePlaylistNameChange = (e) => {
-    setPlaylistTitle(e.target.value);
-  };
+  const handlePlaylistNameChange = (e) => setPlaylistTitle(e.target.value);
+  const handleDescriptionChange = (e) => setPlaylistDesc(e.target.value);
 
-  const handleDescriptionChange = (e) => {
-    setPlaylistDesc(e.target.value);
-  };
-
-  const handlePrivateToggleChange = (e) => {
-    setIsPrivate(e.target.checked);
-  };
+  const handlePrivateToggleChange = (e) => setIsPrivate(e.target.checked);
 
   return (
     <div>
       <div className={styles.Playlist}>
-        <label></label>
         <input
           id="playlistTitle"
           value={playlistTitle}

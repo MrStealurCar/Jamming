@@ -28,7 +28,7 @@ h2 {
 }
 
 .App {
-  height: 100vh;
+  height: 500%;
   padding: 0 17% 10% 17%;
   background-image: url("./background_photo_desktop.jpg");
   margin-top: -23px;
@@ -38,13 +38,11 @@ h2 {
   font-family: "Work Sans", sans-serif;
   font-weight: 500;
   color: #fff;
-  /* display: flex; */
-  /* flex-direction: column; */
+  display: flex;
+  flex-direction: column;
 }
 
 .appPlaylist {
-  display: flex;
-  justify-content: space-between;
   width: 100%;
 }
 
@@ -54,4 +52,45 @@ h2 {
     flex-direction: column;
     flex-wrap: wrap;
   }
+}
+
+.SearchBar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 6.94rem;
+  margin-bottom: 6.33rem;
+}
+
+.SearchBar input {
+  width: 287px;
+  padding: 0.88rem 0;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  margin-bottom: 2.22rem;
+  color: #010c3f;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.SearchBar input:focus {
+  outline: none;
+}
+
+.SearchButton {
+  cursor: pointer;
+  width: 8.11rem;
+  padding: 0.77rem 0;
+  border-radius: 54px;
+  background-color: #010c3f;
+  text-align: center;
+  font-size: 0.833rem;
+  transition: background-color 0.25s;
+  border: 0px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.SearchButton:hover {
+  background-color: rgba(108, 65, 233, 0.7);
 }

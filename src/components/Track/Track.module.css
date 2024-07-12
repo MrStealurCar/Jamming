@@ -1,5 +1,6 @@
 .track {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   border-bottom: 1px solid rgba(256, 256, 256, 0.8);
 }
@@ -31,7 +32,8 @@
 }
 
 .trackInformation p {
+  align-items: center;
+
   font-size: 0.83rem;
-  font-weight: 300;
   color: rgba(256, 256, 256, 0.8);
 }

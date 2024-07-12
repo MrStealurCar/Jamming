@@ -1,12 +1,12 @@
 .SearchResults {
-  width: 200%;
+  width: 98.8%;
   height: 200%;
   overflow-y: scroll;
-  padding: 0.88rem;
+  padding: 1rem;
+  line-height: 1;
+  margin-bottom: 25px;
   background-color: rgba(1, 12, 63, 0.7);
   box-shadow: 0 4px 2px 2px #000000;
-  display: flex;
-  justify-content: center;
 }
 
 ::-webkit-scrollbar {
