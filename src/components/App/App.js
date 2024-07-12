@@ -3,15 +3,9 @@ import styles from "./App.module.css";
 import Playlist from "../Playlist/Playlist";
 import SearchBar from "../SearchBar/SearchBar";
 import SearchResults from "../SearchResults/SearchResults";
+import { getSearchResults, loginUrl, savePlaylist } from "../../api/spotify";
 
-const CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
-const REDIRECT_URI = process.env.REACT_APP_SPOTIFY_REDIRECT_URI;
-const AUTH_ENDPOINT = process.env.REACT_APP_SPOTIFY_AUTH_URL;
 
-const RESPONSE_TYPE = "token";
-const loginUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
-  REDIRECT_URI
-)}&response_type=${RESPONSE_TYPE}&scope=playlist-modify-public playlist-modify-private user-read-private user-read-email`;
 
 function App() {
   const [token, setToken] = useState(null);
@@ -58,40 +52,6 @@ function App() {
     }
   }, []);
 
-  const getToken = () => {
-    const token = localStorage.getItem("spotify_access_token");
-    const expiresAt = localStorage.getItem("spotify_token_expires_at");
-
-    if (new Date().getTime() / 1000 < parseInt(expiresAt)) {
-      return token;
-    } else {
-      localStorage.removeItem("spotify_access_token");
-      localStorage.removeItem("spotify_token_expires_at");
-      window.location.href = loginUrl;
-      return null;
-    }
-  };
-  const getSearchResults = async () => {
-    const token = getToken();
-    if (!token) return;
-
-    try {
-      const response = await fetch(
-        `https://api.spotify.com/v1/search?q=${query}&type=track`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (!response.ok) throw new Error("Failed to fetch data");
-      const data = await response.json();
-      setSearchResults(data.tracks.items);
-    } catch (error) {
-      console.error("Error fetching search results:", error);
-    }
-  };
-
   const addTrack = (track) => {
     // If track is not already in playlist add it to playlist
     if (!playlistTracks.find((savedTrack) => savedTrack.id === track.id)) {
@@ -105,76 +65,34 @@ function App() {
     );
   };
 
-  const handleSearchChange = (e) => setQuery(e.target.value);
+  const handleGetSearchResults = async (query) => {
+    const searchResults = await getSearchResults(query);
+    setSearchResults(searchResults);
+  }
 
-  const savePlaylist = async () => {
-    try {
-      // Makes request to get users profile
-      const response = await fetch(`https://api.spotify.com/v1/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  const handleSavePlaylist = async () => {
+    const trackUris = playlistTracks.map((track) => track.uri);
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch user profile");
-      }
+    const playlistData = {
+      title: playlistTitle,
+      description: playlistDesc,
+      isPrivate: isPrivate,
+      tracks: trackUris,
+    };
 
-      const profile = await response.json();
-      const user_id = profile.id; //Gets user ID
+    const response = await savePlaylist(playlistData);
 
-      //Create new playlist
-      const createPlaylistResponse = await fetch(
-        `https://api.spotify.com/v1/users/${user_id}/playlists`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: playlistTitle,
-            description: playlistDesc,
-            public: !isPrivate,
-          }),
-        }
-      );
-
-      if (!createPlaylistResponse.ok) {
-        throw new Error("Failed to create playlist");
-      }
-
-      const playlist = await createPlaylistResponse.json();
-      const playlist_id = playlist.id;
-
-      const trackUris = playlistTracks.map((track) => track.uri);
-
-      //Add tracks to playlist
-      const addTrackResponse = await fetch(
-        `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ uris: trackUris }),
-        }
-      );
-
-      if (!addTrackResponse.ok) {
-        throw new Error("Failed to add track");
-      }
-
-      //Clears playlist, makes playlist public again (if user checked box), and reverts back to placeholder title and description
+    if (response) {
       setPlaylistTitle("");
       setPlaylistDesc("");
       setPlaylistTracks([]);
       setIsPrivate(false);
-    } catch (error) {
-      console.error("Error adding tracks:", error);
     }
-  };
+  }
+
+  const handleSearchChange = (e) => setQuery(e.target.value);
+
+  
 
   return token ? (
     <div>
@@ -187,7 +105,7 @@ function App() {
           <SearchBar
             value={query}
             onChange={handleSearchChange}
-            getSearchResults={getSearchResults}
+            getSearchResults={handleGetSearchResults}
             setSearchResults={setSearchResults}
           />
         </div>
@@ -203,7 +121,7 @@ function App() {
             setPlaylistDesc={setPlaylistDesc}
             setIsPrivate={setIsPrivate}
             onRemove={removeTrack}
-            onSave={savePlaylist}
+            onSave={handleSavePlaylist}
           />
         </div>
       </div>
