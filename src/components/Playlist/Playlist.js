@@ -36,7 +36,7 @@ function Playlist({
           placeholder="Add an Optional Description"
           type="text"
         />
-        <label for="privatePlaylist">Private Playlist</label>
+        <label htmlFor="privatePlaylist">Private Playlist</label>
         <input
           checked={isPrivate}
           id="privatePlaylist"
