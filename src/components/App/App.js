@@ -5,8 +5,6 @@ import SearchBar from "../SearchBar/SearchBar";
 import SearchResults from "../SearchResults/SearchResults";
 import { getSearchResults, loginUrl, savePlaylist } from "../../api/spotify";
 
-
-
 function App() {
   const [token, setToken] = useState(null);
   const [query, setQuery] = useState("");
@@ -80,9 +78,9 @@ function App() {
       tracks: trackUris,
     };
 
-    const response = await savePlaylist(playlistData);
+    const newPlaylist = await savePlaylist(playlistData);
 
-    if (response) {
+    if (newPlaylist) {
       setPlaylistTitle("");
       setPlaylistDesc("");
       setPlaylistTracks([]);

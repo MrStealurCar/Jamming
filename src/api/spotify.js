@@ -21,90 +21,53 @@ const getToken = () => {
     }
   };
 
-export const getSearchResults = async (query) => {
+// reusable function to fetch data from Spotify API
+const fetchSpotify = async (method, path, body) => {
     const token = getToken();
-    if (!token) return;
-
     try {
-      const response = await fetch(
-        `https://api.spotify.com/v1/search?q=${query}&type=track`,
-        {
-          headers: {
+      const response = await fetch(`https://api.spotify.com/v1${path}`, {
+        method: method,
+        headers: {
             Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (!response.ok) throw new Error("Failed to fetch data");
-      const data = await response.json();
-
-      return data.tracks.items;
-    } catch (error) {
-      console.error("Error fetching search results:", error);
+            },
+        ...(body && { body: JSON.stringify(body) }),
+        });
+        if (!response.ok) throw new Error("Failed to fetch data");
+        const data = await response.json();
+        return data;
     }
+    catch (error) {
+        console.error("Error fetching data:", error);
+    }
+};
+
+export const getSearchResults = async (query) => {
+    const data = await fetchSpotify("GET", `/search?q=${query}&type=track`);
+      return data.tracks.items;
   };
 
   export const savePlaylist = async (playlistData) => {
-    const token = getToken();
-    try {
-      // Makes request to get users profile
-      const response = await fetch(`https://api.spotify.com/v1/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    // we need the user id to create a playlist
+    const userProfile = await fetchSpotify("GET", "/me");
+    if (!userProfile?.id) return null;
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch user profile");
-      }
-
-      const profile = await response.json();
-      const user_id = profile.id; //Gets user ID
-
-      //Create new playlist
-      const createPlaylistResponse = await fetch(
-        `https://api.spotify.com/v1/users/${user_id}/playlists`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: playlistData.title,
-            description: playlistData.description,
-            public: !playlistData.isPrivate,
-          }),
-        }
-      );
-
-      if (!createPlaylistResponse.ok) {
-        throw new Error("Failed to create playlist");
-      }
-
-      const playlist = await createPlaylistResponse.json();
-      const playlist_id = playlist.id;
+    // create playlist WITHOUT tracks
+    const newPlaylist = await fetchSpotify("POST", `/users/${userProfile.id}/playlists`, {
+        name: playlistData.title,
+        description: playlistData.description,
+        public: !playlistData.isPrivate,
+    });
+    if (!newPlaylist?.id) return null;
 
       const trackUris = playlistData.tracks.map((track) => track.uri);
+    // Add tracks to newly created playlist, this endpoint does not return the updated playlist
+    const response = await fetchSpotify("POST", `/playlists/${newPlaylist.id}/tracks`, {
+        uris: trackUris,
+    });
+    if (!response?.snapshot_id) return null;
 
-      //Add tracks to playlist
-      const addTrackResponse = await fetch(
-        `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ uris: trackUris }),
-        }
-      );
+    // get the updated playlist so i can return it
+    const updatedPlaylist = await fetchSpotify("GET", `/playlists/${newPlaylist.id}`);
 
-      if (!addTrackResponse.ok) {
-        throw new Error("Failed to add track");
-      }
-
-      return addTrackResponse.json();
-    } catch (error) {
-      console.error("Error adding tracks:", error);
-    }
+      return updatedPlaylist;
   };
