@@ -1,3 +1,5 @@
+import { showNotification } from "../utils/notifications";
+
 const CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
 const REDIRECT_URI = process.env.REACT_APP_SPOTIFY_REDIRECT_URI;
 const AUTH_ENDPOINT = process.env.REACT_APP_SPOTIFY_AUTH_URL;
@@ -38,6 +40,7 @@ const fetchSpotify = async (method, path, body) => {
     }
     catch (error) {
         console.error("Error fetching data:", error);
+        showNotification("Failed to fetch from spotify api", "error");
     }
 };
 
