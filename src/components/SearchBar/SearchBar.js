@@ -1,6 +1,10 @@
 import styles from "./SearchBar.module.css";
 
 function SearchBar({ value, onChange, getSearchResults, setSearchResults }) {
+  const handleSearch = () => {
+    getSearchResults(value);
+  };
+
   const clearSearchResults = () => {
     setSearchResults([]);
   };
@@ -13,7 +17,7 @@ function SearchBar({ value, onChange, getSearchResults, setSearchResults }) {
         value={value}
         onChange={onChange}
       />
-      <button className={styles.SearchButton} onClick={getSearchResults}>
+      <button className={styles.SearchButton} onClick={handleSearch}>
         SEARCH
       </button>
       <br />
