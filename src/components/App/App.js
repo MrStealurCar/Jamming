@@ -66,7 +66,7 @@ function App() {
   const handleGetSearchResults = async (query) => {
     const searchResults = await getSearchResults(query);
     setSearchResults(searchResults);
-  }
+  };
 
   const handleSavePlaylist = async () => {
     const trackUris = playlistTracks.map((track) => track.uri);
@@ -86,11 +86,9 @@ function App() {
       setPlaylistTracks([]);
       setIsPrivate(false);
     }
-  }
+  };
 
   const handleSearchChange = (e) => setQuery(e.target.value);
-
-  
 
   return token ? (
     <div>
