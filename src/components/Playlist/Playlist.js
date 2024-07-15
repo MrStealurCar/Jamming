@@ -10,7 +10,6 @@ function Playlist({
   setIsPrivate,
   onRemove,
   onSave,
-
   setPlaylistDesc,
 }) {
   const handlePlaylistNameChange = (e) => setPlaylistTitle(e.target.value);
