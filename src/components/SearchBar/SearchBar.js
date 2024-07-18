@@ -17,19 +17,11 @@ function SearchBar({ value, onChange, getSearchResults, setSearchResults }) {
         value={value}
         onChange={onChange}
       />
-      <button
-        className={styles.SearchButton}
-        onClick={handleSearch}
-        onTouchStart={handleSearch}
-      >
+      <button className={styles.SearchButton} onClick={handleSearch}>
         SEARCH
       </button>
       <br />
-      <button
-        className={styles.ClearSearchButton}
-        onClick={clearSearchResults}
-        onTouchStart={handleSearch}
-      >
+      <button className={styles.ClearSearchButton} onClick={clearSearchResults}>
         Clear Search Results
       </button>
     </div>

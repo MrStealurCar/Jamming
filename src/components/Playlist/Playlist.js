@@ -48,11 +48,7 @@ function Playlist({
           isRemoval={true}
           onRemove={onRemove}
         />
-        <button
-          onClick={onSave}
-          onTouchStart={onSave}
-          className={styles.PlaylistSave}
-        >
+        <button onClick={onSave} className={styles.PlaylistSave}>
           SAVE TO SPOTIFY
         </button>
       </div>
