@@ -1,70 +1,34 @@
-# Getting Started with Create React App
+# Jammming
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Jammming is a web App that allows users to search for songs, create playlists, and save them to their Spotify account.
 
-## Available Scripts
+## Description
 
-In the project directory, you can run:
+This App Was built with React and the Spotify API. It's features include:
 
-### `npm start`
+- Allow users to search for any song or band using the Spotify API
+- Add songs to a playlist
+- Save playlists directly to their Spotify account
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Why This Was Built
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- I built this as a portfolio project that is part of the Front End Engineer career path on Codecademy. It is one of the projects I needed to complete to earn the Front End Engineer certification at the end of the career path. It demonstrates my knowledge of API requests, and authentication
 
-### `npm test`
+## Getting Started Locally
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Set up a Spotify Developer account at https://developer.spotify.com/
+- Make sure Node is installed
+- Run 'npm install'
+- Create a .env file in the root directory and set your env variables to your Spotify API credentials
+- Run 'npm start'
 
-### `npm run build`
+## Deployed At
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This App was deployed using Netlify: https://wejammmin.netlify.app/#
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Note:** The App is still in development mode, which means only authorized users can search for songs, and create playlists. If you would like to use this App please send me your name, and the email you used to sign up for Spotify
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Contributors
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Jacob Rodriguez
+- Matthew Whitney
