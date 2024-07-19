@@ -12,7 +12,7 @@ This app was built with React and the Spotify API. It's features include:
 
 ## Why This Was Built
 
-- I built this as a portfolio project that is part of the Front End Engineer career path on Codecademy. It is one of the projects I needed to complete to earn the Front End Engineer certification at the end of the career path. It demonstrates my knowledge of API requests, and authentication
+- I built this as a portfolio project that is part of the Front End Engineer career path on Codecademy. It is one of the projects I needed to complete to earn the Front End Engineer certification at the end of the career path. It demonstrates my knowledge of API requests, and authentication.
 
 ## Getting Started Locally
 
@@ -26,7 +26,7 @@ This app was built with React and the Spotify API. It's features include:
 
 This App was deployed using Netlify: https://wejammmin.netlify.app/#
 
-- **Note:** The App is still in development mode, which means only authorized users can search for songs, and create playlists. If you would like to use this App please send me your name, and the email you used to sign up for Spotify
+- **Note:** The App is still in development mode, which means only authorized users can search for songs, and create playlists. If you would like to use this App please send me your name, and the email you used to sign up for Spotify.
 
 ### Contributors
 
